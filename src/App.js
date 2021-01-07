@@ -1,14 +1,17 @@
 import React from 'react';
-import { ApolloProvider } from 'react-apollo';
-import Continents from './container/Continents';
-import client from './lib/ApolloClient';
+import { BrowserRouter, Route } from 'react-router-dom';
+import CreatePersonContainer from './container/CreatePersonContainer';
+import PersonsContainer from './container/PersonsContainer';
 
 function App() {
   return (
-    <ApolloProvider client={client}>
+    <>
       <h1>React + Apollo Client</h1>
-      <Continents />
-    </ApolloProvider>
+      <BrowserRouter>
+        <Route path={"/"} component={() => PersonsContainer()} exact/>
+        <Route path={"/create"} component={() => CreatePersonContainer()} />
+      </BrowserRouter>
+    </>
   );
 }
 

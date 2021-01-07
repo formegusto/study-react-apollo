@@ -2,20 +2,20 @@ import React from 'react';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 
-const FETCH_CONTINENTS = gql`
+const FETCH_PERSONS = gql`
     query {
-        continents {
-            code
+        persons {
+            id
             name
         }
     }
 `;
 
-function Continents() {
+function PersonsContainer() {
     return (
         <>
-            <h2>Continents</h2>
-            <Query query={FETCH_CONTINENTS}>
+            <h2>Persons</h2>
+            <Query query={FETCH_PERSONS}>
                 {({ loading, error, data }) => {
                     if(loading)
                         return <p>Loading...</p>
@@ -23,8 +23,8 @@ function Continents() {
                         return <p>Error...</p>
                     return (
                         <ul>
-                            {data.continents.map(({ code, name }) => (
-                                <li key={code}>{name}</li>
+                            {data.persons.map(({ id, name }) => (
+                                <li key={id}>{name}</li>
                             ))}
                         </ul>
                     )
@@ -34,4 +34,4 @@ function Continents() {
     );
 }
 
-export default Continents;
+export default PersonsContainer;
