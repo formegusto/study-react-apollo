@@ -12,7 +12,7 @@ const ADD_PERSON = gql`
     }
 `;
 
-function CreatePersonContainer() {
+function CreatePersonContainer({ history }) {
     const { value, onChange } = useInput({
         id: "",
         name: "",
@@ -49,7 +49,10 @@ function CreatePersonContainer() {
                     "id" : parseInt(value.id),
                     "age" : parseInt(value.age),
                 }
-            }}>
+            }}
+                onCompleted = {() => {
+                    history.push("/");
+                }}>
                 {
                     addPerson =>
                         (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import CreatePersonContainer from './container/CreatePersonContainer';
 import PersonsContainer from './container/PersonsContainer';
 
@@ -8,8 +8,10 @@ function App() {
     <>
       <h1>React + Apollo Client</h1>
       <BrowserRouter>
-        <Route path={"/"} component={() => PersonsContainer()} exact/>
-        <Route path={"/create"} component={() => CreatePersonContainer()} />
+        <Switch>
+          <Route path={"/"} component={(props) => PersonsContainer(props)} exact/>
+          <Route path={"/create"} component={(props) => CreatePersonContainer(props)} />
+        </Switch>
       </BrowserRouter>
     </>
   );
