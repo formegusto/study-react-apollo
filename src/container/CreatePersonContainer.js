@@ -1,6 +1,6 @@
 import { gql } from 'apollo-boost';
 import React from 'react';
-import { Mutation } from 'react-apollo';
+import { useMutation } from 'react-apollo';
 import useInput from '../lib/useInput';
 
 const ADD_PERSON = gql`
@@ -12,7 +12,13 @@ const ADD_PERSON = gql`
     }
 `;
 
-function CreatePersonContainer({ history }) {
+function CreatePersonContainer({ refetch }) {
+    const [ addPerson, {loading, error} ] = useMutation(ADD_PERSON, {
+        onCompleted : (createPerson) => {
+            console.log(createPerson);
+            refetch();
+        }
+    });
     const { value, onChange } = useInput({
         id: "",
         name: "",
@@ -43,26 +49,17 @@ function CreatePersonContainer({ history }) {
                 placeholder="address"
                 name="address"
                 onChange={(e) => onChange(e)} />
-            <Mutation mutation={ADD_PERSON} variables={{
-                "person" : {
-                    ...value,
-                    "id" : parseInt(value.id),
-                    "age" : parseInt(value.age),
-                }
-            }}
-                onCompleted = {() => {
-                    history.push("/");
-                }}>
-                {
-                    addPerson =>
-                        (
-                            <button onClick={addPerson}>
-                                Submit
-                            </button> 
-                        )
-                }
-
-            </Mutation>
+            <button onClick={() => addPerson({
+                variables : {
+                    "person" : {
+                        ...value,
+                        "id" : parseInt(value.id),
+                        "age" : parseInt(value.age),
+                    }
+                },
+            })}>
+                Submit
+            </button>
         </div>
     )
 }

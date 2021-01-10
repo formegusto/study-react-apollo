@@ -8,8 +8,6 @@ const useInput = function(initialState) {
             ...value,
             [e.target.name] : e.target.value
         });
-
-        console.log(value);
     }, [value]);
 
     return {
